@@ -1,0 +1,800 @@
+{
+	"info": {
+		"_postman_id": "a6aee734-483c-4b49-924f-64d5d86ed5b4",
+		"name": "Bestbuy-API Playground",
+		"description": "These requests showcase some of the things you can do with the API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5232817"
+	},
+	"item": [
+		{
+			"name": "Highest Priced Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3030/products?$sort[price]=-1",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "$sort[price]",
+							"value": "-1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product Name and Description Only",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3030/products?$select[]=Energizer - N Cell E90 Batteries (2-Pack)&$select[]=Alkaline batteries; 1.5V",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "$select[]",
+							"value": "Energizer - N Cell E90 Batteries (2-Pack)"
+						},
+						{
+							"key": "$select[]",
+							"value": "Alkaline batteries; 1.5V"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TVs with free shipping and price between $500 and $800",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3030/products?category.name=TVs&price[$gt]=750&price[$lt]=800&shipping[$eq]=0",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "category.name",
+							"value": "TVs"
+						},
+						{
+							"key": "price[$gt]",
+							"value": "750"
+						},
+						{
+							"key": "price[$lt]",
+							"value": "800"
+						},
+						{
+							"key": "shipping[$eq]",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Category Names Only",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3030/categories?name=TV %26 Home Theater[&name[0]=TVs",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"categories"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "TV %26 Home Theater["
+						},
+						{
+							"key": "name[0]",
+							"value": "TVs"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Category",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{      \n\t\"id\": \"pcmcat1234521\",\n\t\"name\": \"TV-APPLE Category\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3030/categories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categories with TV in the name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3030/categories?name[$like]=*TV*",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"categories"
+					],
+					"query": [
+						{
+							"key": "name[$like]",
+							"value": "*TV*"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find stores in Minnesota",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3030/stores?state=MN",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"stores"
+					],
+					"query": [
+						{
+							"key": "state",
+							"value": "MN"
+						},
+						{
+							"key": "City",
+							"value": "Jersey city",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find stores in NewJesey",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3030/stores?state=NJ&id=344",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"stores"
+					],
+					"query": [
+						{
+							"key": "state",
+							"value": "NJ"
+						},
+						{
+							"key": "cityid",
+							"value": "Paramus",
+							"disabled": true
+						},
+						{
+							"key": "id",
+							"value": "344"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find stores that sell Apple products",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3030/stores?service.name=Apple Shop",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"stores"
+					],
+					"query": [
+						{
+							"key": "service.name",
+							"value": "Apple Shop"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Stores Within 10 Miles of Beverly Hills",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3030/stores?near=90210&service.name=Windows%20Store",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"stores"
+					],
+					"query": [
+						{
+							"key": "near",
+							"value": "90210"
+						},
+						{
+							"key": "service.name",
+							"value": "Windows%20Store"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Apple Ipod Product\",\n\t\"type\": \"Hard Good\",\n\t\"upc\": \"12345676\",\n\t\"price\": 999.99,\n\t\"description\": \"This is a placeholder request for creating a new product.\",\n\t\"model\": \"NP12345\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3030/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Store",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{      \n\t  \"name\": \"BEstBuy Store\",\n      \"type\": \"BigBox\",\n      \"address\": \"570 WashingtonBlvd\",\n      \"address2\": \"\",\n      \"city\": \"JerseyCity\",\n      \"state\": \"NJ\",\n      \"zip\": \"55123\",\n      \"lat\": 44.969658,\n      \"lng\": -93.449539,\n      \"hours\": \"Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3030/stores",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"stores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Service",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{      \n\t  \"name\": \"New Service\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3030/services",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"services"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Stores By id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3030/stores?id=8921",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"stores"
+					],
+					"query": [
+						{
+							"key": "state",
+							"value": "NJ",
+							"disabled": true
+						},
+						{
+							"key": "id",
+							"value": "8921"
+						},
+						{
+							"key": "city",
+							"value": "Jersey City",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modifycify of the stores",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"city\": \"Jersey City\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3030/stores?id=8921",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"stores"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "8921"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Getall Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "9999681",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3030/products/?id=9999681",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"products",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "9999681"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product By id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3030/products/9999680",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"products",
+						"9999680"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"response=pm.response.json;\r",
+							"console.log(response);\r",
+							"\r",
+							"//  pm.test(\"Validate prod name\", function () {\r",
+							"//      var jsonData = pm.response.json();\r",
+							"//      pm.expect(jsonData,).to.eql(\"Lenova Ipad5\");\r",
+							"     \r",
+							"//  });\r",
+							" //pm.globals.set(\"Prod ID\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Lenova Ipad5\",\r\n  \"type\": \"Laptop\",\r\n  \"price\": 1199,\r\n  \"shipping\": 12,\r\n  \"upc\": \"string\",\r\n  \"description\": \"Lenova Ipad\",\r\n  \"manufacturer\": \"Lenova inC\",\r\n  \"model\": \"ipad5\",\r\n  \"url\": \"string\",\r\n  \"image\": \"string\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3030/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
